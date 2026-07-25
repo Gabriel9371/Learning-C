@@ -21,6 +21,7 @@ int main(){
   bool runing = false;
   while (!runing) {
 
+
   SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
   SDL_RenderClear(renderer);
   SDL_RenderPresent(renderer);
