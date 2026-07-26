@@ -30,6 +30,13 @@ Point2D cordenadas(Point3D p){
   return p22;
 }
 
+
+int arestas[12][2] = {
+{0,1},{2,3},{2,0},{3,1},
+{4,5},{6,7},{6,4},{7,5},
+{0,4},{1,5},{2,6},{5,7}
+};
+
 int main(){
   SDL_Init(SDL_INIT_VIDEO);
   SDL_Window* window = SDL_CreateWindow(
@@ -56,14 +63,27 @@ int main(){
     {-1, -1, z2}
 
   };
-
   bool runing = false;
   while (!runing) {
 
 
   SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
   SDL_RenderClear(renderer);
+
+
+    for(int i=0; i<12; i++){
+      int a = arestas[i][0];
+      int b = arestas[i][1];
+  
+      Point2D pA = cordenadas(cube[a]);
+      Point2D pB = cordenadas(cube[b]);
+
+      SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+      SDL_RenderDrawLine(renderer, pA.x, pA.y, pB.x, pB.y);
+    }
+
   SDL_RenderPresent(renderer);
+
     while(SDL_PollEvent(&e)){
       if(e.type == SDL_QUIT){
         runing = true;
