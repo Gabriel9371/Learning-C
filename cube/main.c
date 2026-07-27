@@ -20,8 +20,10 @@ typedef struct{
 }Point2D;
 
 Point2D cordenadas(Point3D p){
-  int x = (p.x * 200) + 400;
-  int y = ((p.y * 200) * -1) + 300;
+  float dist_camera = 4.0f;
+
+  float x = (p.x * 200) / (dist_camera + p.z) + 400;
+  int y = ((p.y * 200) * -1) / (dist_camera + p.z) + 300;
 
   Point2D p22;
   p22.x = x;
@@ -34,7 +36,7 @@ Point2D cordenadas(Point3D p){
 int arestas[12][2] = {
 {0,1},{2,3},{2,0},{3,1},
 {4,5},{6,7},{6,4},{7,5},
-{0,4},{1,5},{2,6},{5,7}
+{0,4},{1,5},{2,6},{3,7}
 };
 
 int main(){
@@ -67,10 +69,11 @@ int main(){
   while (!runing) {
 
 
-  SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-  SDL_RenderClear(renderer);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+    SDL_RenderClear(renderer);
 
 
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     for(int i=0; i<12; i++){
       int a = arestas[i][0];
       int b = arestas[i][1];
@@ -78,11 +81,10 @@ int main(){
       Point2D pA = cordenadas(cube[a]);
       Point2D pB = cordenadas(cube[b]);
 
-      SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
       SDL_RenderDrawLine(renderer, pA.x, pA.y, pB.x, pB.y);
     }
 
-  SDL_RenderPresent(renderer);
+    SDL_RenderPresent(renderer);
 
     while(SDL_PollEvent(&e)){
       if(e.type == SDL_QUIT){
