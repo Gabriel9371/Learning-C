@@ -76,6 +76,8 @@ int main(){
 
   };
   bool runing = false;
+  float ang = 0.1f;
+
   while (!runing) {
 
 
@@ -87,13 +89,15 @@ int main(){
     for(int i=0; i<12; i++){
       int a = arestas[i][0];
       int b = arestas[i][1];
-  
-      Point2D pA = cordenadas(cube[a]);
-      Point2D pB = cordenadas(cube[b]);
+      
+      Point3D rotA = rotacaoY(cube[a], ang);
+      Point3D rotB = rotacaoY(cube[b], ang);
+      Point2D pA = cordenadas(rotA);
+      Point2D pB = cordenadas(rotB);
 
       SDL_RenderDrawLine(renderer, pA.x, pA.y, pB.x, pB.y);
     }
-
+    ang += 0.2f;
     SDL_RenderPresent(renderer);
 
     while(SDL_PollEvent(&e)){
