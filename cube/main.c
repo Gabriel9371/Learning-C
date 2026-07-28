@@ -3,6 +3,7 @@
 #include <SDL2/SDL_keycode.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_video.h>
+#include <math.h>
 #include <stdbool.h>
 
 
@@ -32,6 +33,15 @@ Point2D cordenadas(Point3D p){
   return p22;
 }
 
+Point3D rotacaoY(Point3D p, float angle){
+  Point3D novo;
+
+  novo.x = p.x * cos(angle) - p.z * sin(angle);
+  novo.z = p.x * sin(angle) + p.z * cos(angle);
+  novo.y = p.y;
+
+  return novo;
+}
 
 int arestas[12][2] = {
 {0,1},{2,3},{2,0},{3,1},
