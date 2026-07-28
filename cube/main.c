@@ -59,7 +59,7 @@ int main(){
     SDL_WINDOW_SHOWN
   );
   
-  SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+  SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED || SDL_RENDERER_PRESENTVSYNC);
   SDL_Event e;
 
   float z1 = 1.0f;
@@ -97,7 +97,7 @@ int main(){
 
       SDL_RenderDrawLine(renderer, pA.x, pA.y, pB.x, pB.y);
     }
-    ang += 0.2f;
+    ang += 0.002f;
     SDL_RenderPresent(renderer);
 
     while(SDL_PollEvent(&e)){
