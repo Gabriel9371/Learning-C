@@ -3,7 +3,6 @@
 #include <SDL2/SDL_keycode.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_video.h>
-#include <math.h>
 #include <stdbool.h>
 
 
@@ -33,15 +32,6 @@ Point2D cordenadas(Point3D p){
   return p22;
 }
 
-Point3D rotacaoY(Point3D p, float angle){
-  Point3D novo;
-
-  novo.x = p.x * cos(angle) - p.z * sin(angle);
-  novo.z = p.x * sin(angle) + p.z * cos(angle);
-  novo.y = p.y;
-
-  return novo;
-}
 
 int arestas[12][2] = {
 {0,1},{2,3},{2,0},{3,1},
@@ -59,7 +49,7 @@ int main(){
     SDL_WINDOW_SHOWN
   );
   
-  SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED || SDL_RENDERER_PRESENTVSYNC);
+  SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
   SDL_Event e;
 
   float z1 = 1.0f;
@@ -76,8 +66,6 @@ int main(){
 
   };
   bool runing = false;
-  float ang = 0.1f;
-
   while (!runing) {
 
 
@@ -89,15 +77,13 @@ int main(){
     for(int i=0; i<12; i++){
       int a = arestas[i][0];
       int b = arestas[i][1];
-      
-      Point3D rotA = rotacaoY(cube[a], ang);
-      Point3D rotB = rotacaoY(cube[b], ang);
-      Point2D pA = cordenadas(rotA);
-      Point2D pB = cordenadas(rotB);
+  
+      Point2D pA = cordenadas(cube[a]);
+      Point2D pB = cordenadas(cube[b]);
 
       SDL_RenderDrawLine(renderer, pA.x, pA.y, pB.x, pB.y);
     }
-    ang += 0.002f;
+
     SDL_RenderPresent(renderer);
 
     while(SDL_PollEvent(&e)){
